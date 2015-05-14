@@ -1,6 +1,7 @@
 <?php namespace Coreplex\Meta\Eloquent;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Coreplex\Meta\Contracts\Group;
 
 class Meta extends Eloquent implements Group {
 
@@ -49,7 +50,7 @@ class Meta extends Eloquent implements Group {
             }
 
             // Assign the data to the key in the refined array
-            $refined[$item['key']] => $item['data'];
+            $refined[$item['key']] = $item['data'];
         }
 
         return $refined;
