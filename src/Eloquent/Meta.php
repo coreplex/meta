@@ -9,9 +9,9 @@ class Meta extends Eloquent {
      * 
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function meta()   
+    public function items()   
     {
-        $this->belongsTo('Coreplex\Meta\Eloquent\Meta\Item');
+        return $this->hasMany('Coreplex\Meta\Eloquent\Meta\Item');
     }
 
     /**
@@ -21,7 +21,7 @@ class Meta extends Eloquent {
      */
     public function metable()   
     {
-        $this->morphTo();
+        return $this->morphTo();
     }
 
 }

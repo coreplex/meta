@@ -15,8 +15,8 @@ class CreateMetasTable extends Migration {
         Schema::create('metas', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->unsignedInteger('metable_id');
-            $table->string('metable_type');
+            $table->unsignedInteger('metable_id')->nullable();
+            $table->string('metable_type')->nullable();
             $table->timestamps();
         });
     }

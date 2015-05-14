@@ -9,7 +9,7 @@ trait HasMetaData {
      */
     public function meta()
     {
-        $this->morphOne('Coreplex\Meta\Eloquent\Meta', 'metable');
+        return $this->morphOne('Coreplex\Meta\Eloquent\Meta', 'metable');
     }
 
 }
