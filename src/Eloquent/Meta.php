@@ -2,7 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Meta extends Eloquent {
+class Meta extends Eloquent implements Group {
+
+    /**
+     * The refined meta, so that it doesn't refine it twic
+     * 
+     * @var null|array
+     */
+    protected $refinedMeta;
 
     /**
      * The meta items for this object
@@ -22,6 +29,45 @@ class Meta extends Eloquent {
     public function metable()   
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Returns the meta items from the container
+     * 
+     * @return array
+     */
+    public function meta()
+    {
+        $items = $this->items->toArray();
+        $refined = [];
+
+        foreach ($items as $item) {
+            // Check if the item is in JSON format. If so, we store it as an
+            // array
+            if ($jsonItem = $this->determineJson($item)) {
+                $item['data'] = (array) $jsonItem;
+            }
+
+            // Assign the data to the key in the refined array
+            $refined[$item['key']] => $item['data'];
+        }
+
+        return $refined;
+    }
+
+    /**
+     * Determines whether a given string is JSON or not, returns false if found
+     * to be something else, returns the decoded object if not
+     * 
+     * @return void|StdClass
+     */
+    private function determineJson($string)
+    {
+        if (is_object($json = json_decode($string))) {
+            return $json;
+        }
+
+        return false;
     }
 
 }
