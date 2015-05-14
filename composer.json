@@ -1,0 +1,21 @@
+{
+    "name": "coreplex/meta",
+    "description": "A PHP 5.4 Page-Meta Container that is easily extensible",
+    "keywords": ["meta", "seo"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthew Collison",
+            "email": "matthewcollison@gmlconsulting.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Coreplex\\Meta\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
