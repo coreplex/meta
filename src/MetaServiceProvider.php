@@ -27,7 +27,6 @@ class MetaServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/meta.php', 'meta');
-        $this->mergeConfigFrom(__DIR__.'/../config/drivers.php', 'drivers');
     }
 
 }
