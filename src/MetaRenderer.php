@@ -1,8 +1,23 @@
 <?php namespace Coreplex\Meta;
 
 use Coreplex\Meta\Contracts\Container;
+use Coreplex\Meta\Contracts\TemplateRenderer;
 
 class MetaRenderer implements Contracts\Renderer {
+
+    /**
+     * The element templates.
+     * 
+     * @var array
+     */
+    protected $templates;
+
+    /**
+     * The fallback element template.
+     * 
+     * @var array
+     */
+    protected $default;
 
     /**
      * Make a new renderer instance
@@ -12,10 +27,11 @@ class MetaRenderer implements Contracts\Renderer {
      *                               a custom one is not present
      * @return void
      */
-    public function __construct(array $templates, array $defaultTemplate)
+    public function __construct(array $templates, array $defaultTemplate, TemplateRenderer $templateRenderer)
     {
         $this->templates = $templates;
         $this->default = $defaultTemplate;
+        $this->templateRenderer = $templateRenderer;
     }
 
     /**
@@ -43,17 +59,32 @@ class MetaRenderer implements Contracts\Renderer {
 
         // Otherwise, just render the single item. The below logic is executed
         // when a single meta item is rendered
-        if ( ! is_array($renderable)) {
-            return "<meta name=\"$key\" content=\"$renderable\">";
-        } else {
-            $meta = "<meta name=\"$key\"";
+        return $this->renderWithTemplate($key, $renderable);
+    }
 
-            foreach ($renderable as $itemKey => $itemValue) {
-                $meta .= ' ' . $itemKey . "=\"$itemValue\"";
-            }
+    /**
+     * Renders an individual meta element with the correct template
+     * 
+     * @param  mixed $key
+     * @param  array $data
+     * @return string
+     */
+    protected function renderWithTemplate($key, $data)
+    {
+        $template = $this->findTemplate($key);
 
-            return $meta . ">";
-        }
+        return $this->templateRenderer->render($key, $data, $template);
+    }
+
+    /**
+     * Find the correct template for the provided key.
+     * 
+     * @param  mixed $key
+     * @return array
+     */
+    protected function findTemplate($key)
+    {
+        return ! empty($this->templates[$key]) ? ! empty($this->templates[$key]['use']) ? new $this->templates[$key]['use'] : $this->templates[$key] : $this->default;
     }
 
 }

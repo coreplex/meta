@@ -32,6 +32,7 @@ class MetaServiceProvider extends ServiceProvider {
     {
         $this->registerContainer();
         $this->registerRenderer();
+        $this->registerTemplateRenderer();
     }
 
     /**
@@ -43,7 +44,8 @@ class MetaServiceProvider extends ServiceProvider {
     {
         $this->app->singleton('coreplex.meta', function($app)
         {
-            return new MetaContainer($app['coreplex.meta.renderer']);
+            $defaultMeta = Eloquent\Meta::defaultGroup();
+            return new MetaContainer($app['coreplex.meta.renderer'], $defaultMeta);
         });
 
         $this->app->bind('Coreplex\Meta\Contracts\Container', function($app)
@@ -53,7 +55,7 @@ class MetaServiceProvider extends ServiceProvider {
     }
 
     /**
-     * Register the meta container
+     * Register the meta renderer
      * 
      * @return void
      */
@@ -61,12 +63,30 @@ class MetaServiceProvider extends ServiceProvider {
     {
         $this->app->singleton('coreplex.meta.renderer', function($app)
         {
-            return new MetaRenderer($app['config']['meta']['elements'], $app['config']['meta']['default']);
+            return new MetaRenderer($app['config']['meta']['elements'], $app['config']['meta']['default'], $app['coreplex.meta.templateRenderer']);
         });
 
         $this->app->bind('Coreplex\Meta\Contracts\Renderer', function($app)
         {
             return $app['coreplex.meta'];
+        });
+    }
+
+    /**
+     * Register the template renderer
+     * 
+     * @return void
+     */
+    public function registerTemplateRenderer()
+    {
+        $this->app->singleton('coreplex.meta.templateRenderer', function($app)
+        {
+            return new TemplateRenderer;
+        });
+
+        $this->app->bind('Coreplex\Meta\Contracts\TemplateRenderer', function($app)
+        {
+            return $app['coreplex.meta.templateRenderer'];
         });
     }
 
@@ -77,7 +97,7 @@ class MetaServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return array('coreplex.meta.renderer');
+        return array('coreplex.meta.template', 'coreplex.meta.renderer', 'coreplex.meta.templateRenderer');
     }
 
 

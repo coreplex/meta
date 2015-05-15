@@ -25,9 +25,13 @@ class MetaContainer implements Contracts\Container {
      * @param Renderer $renderer
      * @return void
      */
-    public function __construct(Renderer $renderer)
+    public function __construct(Renderer $renderer, Group $default = null)
     {
         $this->renderer = $renderer;
+
+        if ( ! is_null($default)) {
+            $this->set($default);
+        }
     }
 
     /**
@@ -37,7 +41,7 @@ class MetaContainer implements Contracts\Container {
      * @param string|array $data
      * @return void
      */
-    public function add($key, $data)
+    public function add($key, $data = null)
     {
         // If a group is passed, recursively add each item from the group and
         // exit the method

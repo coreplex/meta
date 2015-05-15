@@ -20,7 +20,7 @@ class Meta extends Eloquent implements Group {
     public function items()   
     {
         return $this->hasMany('Coreplex\Meta\Eloquent\Meta\Item');
-    }
+    } 
 
     /**
      * Morph to the relation
@@ -72,5 +72,15 @@ class Meta extends Eloquent implements Group {
 
         return false;
     }
+
+    /**
+     * Return the default meta group, if one exists
+     * 
+     * @return Coreplex\Meta\Contracts\Group|null
+     */
+    public static function defaultGroup()   
+    {
+        return static::where('default', true)->first();
+    }   
 
 }

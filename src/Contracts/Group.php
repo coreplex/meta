@@ -9,4 +9,11 @@ interface Group {
      */
     public function meta();
 
+    /**
+     * Return the default meta group, if one exists
+     * 
+     * @return Coreplex\Meta\Contracts\Group|null
+     */
+    public static function defaultGroup();
+
 }
