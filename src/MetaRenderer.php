@@ -49,7 +49,7 @@ class MetaRenderer implements Contracts\Renderer {
             $meta = "<meta name=\"$key\"";
 
             foreach ($renderable as $itemKey => $itemValue) {
-                $meta .= $itemKey . "=\"$itemValue\"";
+                $meta .= ' ' . $itemKey . "=\"$itemValue\"";
             }
 
             return $meta . ">";

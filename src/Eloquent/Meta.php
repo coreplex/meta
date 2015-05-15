@@ -60,11 +60,13 @@ class Meta extends Eloquent implements Group {
      * Determines whether a given string is JSON or not, returns false if found
      * to be something else, returns the decoded object if not
      * 
-     * @return void|StdClass
+     * @return void|array
      */
     private function determineJson($string)
     {
-        if (is_object($json = json_decode($string))) {
+        $json = json_decode($string, true);
+
+        if (is_array($json)) {
             return $json;
         }
 
