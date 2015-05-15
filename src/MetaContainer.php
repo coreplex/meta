@@ -69,7 +69,7 @@ class MetaContainer implements Contracts\Container {
      */
     public function set(Group $meta)
     {
-        $this->items = $meta->items();
+        $this->items = $meta->meta();
     }
 
     /**

@@ -43,9 +43,9 @@ class Meta extends Eloquent implements Group {
         $refined = [];
 
         foreach ($items as $item) {
-            // Check if the item is in JSON format. If so, we store it as an
-            // array
-            if ($jsonItem = $this->determineJson($item)) {
+            // Check if the item data is in JSON format. If so, we store it as
+            // an array
+            if ($jsonItem = $this->determineJson($item['data'])) {
                 $item['data'] = (array) $jsonItem;
             }
 
