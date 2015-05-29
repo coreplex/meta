@@ -1,7 +1,7 @@
 {
     "name": "coreplex/meta",
     "description": "A PHP 5.4 Page-Meta Container that is easily extensible",
-    "keywords": ["meta", "seo"],
+    "keywords": ["meta", "seo", "laravel", "laravel5"],
     "license": "MIT",
     "authors": [
         {
