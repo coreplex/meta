@@ -42,13 +42,17 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
             }
 
             if ( ! is_array($data)) {
+                $valueAttribute = 'content';
                 // And it is a single item
-                // return "<meta name=\"$key\" content=\"$renderable\">";
+                if (isset($template['valueAttribute']) && $template['valueAttribute']) {
+                    $valueAttribute = $template['valueAttribute'];
+                }
+
+                if ( ! isset($template['valueAttribute']) || $template['valueAttribute'] !== false) {
+                    $element .= " $valueAttribute=\"$data\"";
+                }
             } else {
                 // Or it is an array of 'key' => 'value'
-                if (isset($template['contentAttribute']) && $template['contentAttribute']) {
-                    $element = "<meta name=\"$key\"";
-                }
 
                 foreach ($data as $itemKey => $itemValue) {
                     $element .= ' ' . $itemKey . "=\"$itemValue\"";
