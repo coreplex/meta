@@ -3,7 +3,24 @@
 class TemplateRenderer implements Contracts\TemplateRenderer {
 
     /**
-     * Render a meta item using the provided template
+     * The array of meta templates
+     * 
+     * @var array
+     */
+    protected $templates;
+
+    /**
+     * Create a new TemplateRenderer instance.
+     * 
+     * @param array $templates
+     */
+    public function __construct(array &$templates)
+    {
+        $this->templates = $templates;
+    }
+
+    /**
+     * Render a meta item using the provided template.
      * 
      * @param  mixed $key
      * @param  string|array $data
@@ -12,6 +29,10 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
      */
     public function render($key, $data, $template)
     {
+        if (! empty($template['extends']) && $template['extends']) {
+            $template = $this->extend($template, $template['extends']);
+        }
+
         $element = "<{$template['element']}";
 
         if (isset($template['empty']) && ! $template['empty']) {
@@ -66,7 +87,20 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
     }
 
     /**
-     * Replace the items in the array by their key prefixed with a colon (:)
+     * Extend the initial template with the template found using the extends
+     * key.
+     * 
+     * @param  array $template
+     * @param  string $extends
+     * @return array
+     */
+    protected function extend($template, $extends)
+    {
+        return array_merge($this->templates[$extends], $template);
+    }
+
+    /**
+     * Replace the items in the array by their key prefixed with a colon (:).
      * 
      * @param  array $replace
      * @param  string $searchText

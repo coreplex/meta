@@ -81,7 +81,9 @@ class MetaServiceProvider extends ServiceProvider {
     {
         $this->app->singleton('coreplex.meta.templateRenderer', function($app)
         {
-            return new TemplateRenderer;
+            $templates = $app['config']['meta']['elements'];
+
+            return new TemplateRenderer($templates);
         });
 
         $this->app->bind('Coreplex\Meta\Contracts\TemplateRenderer', function($app)
