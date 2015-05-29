@@ -17,7 +17,7 @@ return [
         'title' => [
             'element' => 'title',
             'empty' => false,
-            'content' => ':content | PRINCE2.com',
+            'content' => ':content | MyWebsite.com',
         ],
         'charset' => [
             'keyAttribute' => false,

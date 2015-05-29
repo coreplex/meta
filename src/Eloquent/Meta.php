@@ -17,7 +17,7 @@ class Meta extends Eloquent implements Group {
      * 
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function items()   
+    public function items()
     {
         return $this->hasMany('Coreplex\Meta\Eloquent\Meta\Item');
     }
