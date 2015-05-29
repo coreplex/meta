@@ -37,7 +37,7 @@ class MetaContainer implements Contracts\Container {
     /**
      * Add a meta item to the container.
      * 
-     * @param string|Coreplex\Meta\Contracts\Container $key
+     * @param string|Coreplex\Meta\Contracts\Group $key
      * @param string|array $data
      * @return void
      */
@@ -46,7 +46,7 @@ class MetaContainer implements Contracts\Container {
         // If a group is passed, recursively add each item from the group and
         // exit the method
         if ($key instanceof Group) {
-            foreach ($key->items() as $key => $data) {
+            foreach ($key->meta() as $key => $data) {
                 $this->add($key, $data);
             }
             return;

@@ -30,6 +30,7 @@ class MetaServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $this->registerRepository();
         $this->registerContainer();
         $this->registerRenderer();
         $this->registerTemplateRenderer();
@@ -44,7 +45,8 @@ class MetaServiceProvider extends ServiceProvider {
     {
         $this->app->singleton('coreplex.meta', function($app)
         {
-            $defaultMeta = Eloquent\Meta::defaultGroup();
+            $defaultMeta = $app['coreplex.meta.repository']->defaultGroup();
+
             return new MetaContainer($app['coreplex.meta.renderer'], $defaultMeta);
         });
 
@@ -91,13 +93,31 @@ class MetaServiceProvider extends ServiceProvider {
     }
 
     /**
+     * Register the meta repository
+     * 
+     * @return void
+     */
+    public function registerRepository()
+    {
+        $this->app->singleton('coreplex.meta.repository', function($app)
+        {
+            return new Eloquent\Repository;
+        });
+
+        $this->app->bind('Coreplex\Meta\Contracts\Repository', function($app)
+        {
+            return $app['coreplex.meta.repository'];
+        });
+    }
+
+    /**
      * Get the services provided by the provider.
      *
      * @return array
      */
     public function provides()
     {
-        return array('coreplex.meta.template', 'coreplex.meta.renderer', 'coreplex.meta.templateRenderer');
+        return array('coreplex.meta.template', 'coreplex.meta.renderer', 'coreplex.meta.templateRenderer', 'coreplex.meta.repository');
     }
 
 

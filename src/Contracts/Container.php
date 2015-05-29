@@ -5,7 +5,7 @@ interface Container {
     /**
      * Add a meta item to the container
      * 
-     * @param string|Coreplex\Meta\Contracts\Container $key
+     * @param string|Coreplex\Meta\Contracts\Group $key
      * @param string|array $data
      * @return void
      */
