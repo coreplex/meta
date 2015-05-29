@@ -9,7 +9,7 @@ interface Container {
      * @param string|array $data
      * @return void
      */
-    public function add($key, $data);
+    public function add($key, $data = false);
 
     /**
      * Retrieve the items from the container
@@ -19,12 +19,13 @@ interface Container {
     public function items();
 
     /**
-     * Overwrite the container with items from a given meta group
+     * Overwrite the container with items from a given meta group, or find one
+     * by it's identifier
      * 
-     * @param Coreplex\Contracts\Group $meta
+     * @param Coreplex\Contracts\Group|string $meta
      * @return void
      */
-    public function set(Group $meta);
+    public function set($meta);
 
     /**
      * Render the items in the container

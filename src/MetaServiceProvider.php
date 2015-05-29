@@ -30,7 +30,7 @@ class MetaServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->registerRepository();
+        $this->registerStore();
         $this->registerContainer();
         $this->registerRenderer();
         $this->registerTemplateRenderer();
@@ -45,9 +45,7 @@ class MetaServiceProvider extends ServiceProvider {
     {
         $this->app->singleton('coreplex.meta', function($app)
         {
-            $defaultMeta = $app['coreplex.meta.repository']->defaultGroup();
-
-            return new MetaContainer($app['coreplex.meta.renderer'], $defaultMeta);
+            return new MetaContainer($app['coreplex.meta.renderer'], $app['coreplex.meta.store.driver']);
         });
 
         $this->app->bind('Coreplex\Meta\Contracts\Container', function($app)
@@ -93,20 +91,25 @@ class MetaServiceProvider extends ServiceProvider {
     }
 
     /**
-     * Register the meta repository
+     * Register the meta store manager and driver
      * 
      * @return void
      */
-    public function registerRepository()
+    protected function registerStore()
     {
-        $this->app->singleton('coreplex.meta.repository', function($app)
+        $this->app->singleton('coreplex.meta.store', function($app)
         {
-            return new Eloquent\Repository;
+            return new Managers\Store($app);
+        });
+
+        $this->app->singleton('coreplex.meta.store.driver', function($app)
+        {
+            return $app['coreplex.meta.store']->driver();
         });
 
         $this->app->bind('Coreplex\Meta\Contracts\Repository', function($app)
         {
-            return $app['coreplex.meta.repository'];
+            return $app['coreplex.meta.store.driver'];
         });
     }
 
@@ -117,7 +120,13 @@ class MetaServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return array('coreplex.meta.template', 'coreplex.meta.renderer', 'coreplex.meta.templateRenderer', 'coreplex.meta.repository');
+        return array(
+            'coreplex.meta.template',
+            'coreplex.meta.renderer',
+            'coreplex.meta.templateRenderer',
+            'coreplex.meta.store',
+            'coreplex.meta.store.driver'
+        );
     }
 
 

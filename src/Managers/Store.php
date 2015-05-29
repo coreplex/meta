@@ -1,11 +1,11 @@
 <?php namespace Coreplex\Meta\Managers;
 
 use Illuminate\Support\Manager;
-use Coreplex\Meta\Eloquent\Repository;
+use Coreplex\Meta\Eloquent\Repository as EloquentRepository;
 
 class Store extends Manager {
 
-    public function getEloquentDriver()
+    public function createEloquentDriver()
     {
         return new EloquentRepository;
     }
@@ -17,7 +17,7 @@ class Store extends Manager {
      */
     public function getDefaultDriver()
     {
-        return $this->app['config']['meta.store'];
+        return $this->app['config']['drivers.store'];
     }
 
     /**
@@ -28,7 +28,7 @@ class Store extends Manager {
      */
     public function setDefaultDriver($name)
     {
-        $this->app['config']['meta.store'] = $name;
+        $this->app['config']['drivers.store'] = $name;
     }
 
 }
