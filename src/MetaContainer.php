@@ -89,8 +89,18 @@ class MetaContainer implements Contracts\Container {
         if ($meta instanceof Group) {
             $this->items = $meta->meta();
         } else {
-            $this->store->find($meta);
+            $this->items = $this->store->find($meta)->meta;
         }
+    }
+
+    /**
+     * Empty the items from the container.
+     * 
+     * @return void
+     */
+    public function flush()
+    {
+        $this->items = [];
     }
 
     /**

@@ -28,6 +28,13 @@ interface Container {
     public function set($meta);
 
     /**
+     * Empty the items from the container.
+     * 
+     * @return void
+     */
+    public function flush();
+
+    /**
      * Render the items in the container
      * 
      * @return string

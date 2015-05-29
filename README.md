@@ -199,6 +199,72 @@ Would yield this when rendered
 You can just pass a standard string to the data column if you don't want multiple
 attributes.
 
+Using the `HasMetaData` Trait
+-------------------------
+
+We've created a handy trait when you can place on your models to immediately
+allow it to have meta. This is done behind the scenes using a polymorphic
+relationship. To get this to work, simply add this to the first line of your
+model class:
+
+```php
+use Coreplex\Meta\Eloquent\HasMetaData;
+
+class Page extends Model {
+    use HasMetaData;
+}
+```
+
+You can then create, update and retrieve them meta group by accessing the
+`meta` relationship on MyModel. It will return a Coreplex\Meta\Eloquent\Meta
+instance which has all the items bound to it, as we have seen in the above
+examples. This can then be set by doing something along the lines of this in
+our controllers:
+
+```php
+public function home(MetaContainer $container)
+{
+    $page = Page::find(1);
+
+    if ( ! $page) {
+        abort(404);
+    }
+
+    if ($page->meta) {
+        $container->add($page->meta);
+    }
+}
+```
+
+This works extremely well if you want to bind meta data to any database table
+in your system. Groups of page-meta can be bound to all sorts of things, from a
+`pages` table record in the database to a `products` table record.
+
+You could quite easily write a fallback for any items which don't have a meta item
+by doing something like this in your controller
+
+```php
+public function home(MetaContainer $container, $productId)
+{
+    $product = Product::find($productId);
+
+    if ( ! $product) {
+        abort(404);
+    }
+
+    if ($product->meta) {
+        $container->add($page->meta);
+    } else {
+        // Empties any defaults out of the container
+        $container->flush();
+
+        // Add auto-generated meta data
+        $container->add('title', $product->title);
+        $container->add('description', $product->short_description);
+    }
+}
+```
+
 Non-Laravel Usage
 -----------------
 A non-laravel usage guide isn't currently available. If you are however
