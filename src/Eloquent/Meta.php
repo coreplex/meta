@@ -6,7 +6,7 @@ use Coreplex\Meta\Contracts\Group;
 class Meta extends Eloquent implements Group {
 
     /**
-     * The refined meta, so that it doesn't refine it twic
+     * The refined meta, so that it doesn't refine it twice
      * 
      * @var null|array
      */
@@ -20,7 +20,7 @@ class Meta extends Eloquent implements Group {
     public function items()   
     {
         return $this->hasMany('Coreplex\Meta\Eloquent\Meta\Item');
-    } 
+    }
 
     /**
      * Morph to the relation
@@ -80,7 +80,9 @@ class Meta extends Eloquent implements Group {
      */
     public static function defaultGroup()   
     {
-        return static::where('default', true)->first();
-    }   
+        $defaultGroup = static::where('default', true)->first();
+
+        return $defaultGroup;
+    }
 
 }
