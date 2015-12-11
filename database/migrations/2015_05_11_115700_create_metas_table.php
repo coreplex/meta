@@ -17,7 +17,7 @@ class CreateMetasTable extends Migration {
             $table->increments('id');
             $table->unsignedInteger('metable_id')->nullable();
             $table->string('metable_type')->nullable();
-            $table->string('indentifier')->nullable()->index();
+            $table->string('identifier')->nullable()->index();
             $table->boolean('default')->default(false);
             $table->timestamps();
         });
