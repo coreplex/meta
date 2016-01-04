@@ -60,7 +60,7 @@ class MetaContainer implements Contracts\Container {
                 $this->add($key, $data);
             }
             return;
-        } elseif ( ! $data) {
+        } elseif ( ! $data && $data !== '') {
             $this->add($this->store->find($key));
             return;
         }
