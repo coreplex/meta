@@ -39,7 +39,7 @@ return [
    
     'default' => [
          'element' => 'meta',
-         'keyAttribute' => 'title',
+         'keyAttribute' => 'name',
          'valueAttribute' => 'content'
     ],
 
