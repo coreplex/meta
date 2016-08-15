@@ -19,6 +19,8 @@ class CreateMetasTable extends Migration {
             $table->string('metable_type')->nullable();
             $table->string('identifier')->nullable()->index();
             $table->boolean('default')->default(false);
+            $table->unsignedInteger('groupable_id')->nullable();
+            $table->string('groupable_type')->nullable();
             $table->timestamps();
         });
     }
