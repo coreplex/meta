@@ -1,21 +1,30 @@
 {
-    "name": "coreplex/meta",
-    "description": "A PHP 5.4 Page-Meta Container that is easily extensible",
-    "keywords": ["meta", "seo", "laravel", "laravel5"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Matthew Collison",
-            "email": "matthew@sixteenstudio.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0"
+  "name": "coreplex/meta",
+  "description": "A PHP 5.4 Page-Meta Container that is easily extensible",
+  "keywords": [
+    "meta",
+    "seo",
+    "laravel",
+    "laravel5"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Matthew Collison",
+      "email": "matthew@sixteenstudio.com"
     },
-    "autoload": {
-        "psr-4": {
-            "Coreplex\\Meta\\": "src/"
-        }
-    },
-    "minimum-stability": "stable"
+    {
+      "name": "Michael Jennings",
+      "email": "michael.jennings91@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Coreplex\\Meta\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
 }
