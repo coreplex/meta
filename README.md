@@ -210,7 +210,8 @@ model class:
 ```php
 use Coreplex\Meta\Eloquent\HasMetaData;
 
-class Page extends Model {
+class Page extends Model 
+{
     use HasMetaData;
 }
 ```
@@ -263,6 +264,31 @@ public function home(MetaContainer $container, $productId)
         $container->add('description', $product->short_description);
     }
 }
+```
+
+Using the `MetaVariant` Trait
+-----------------------------
+
+We've also added the ability to have meta variants, this is useful if you have multiple countries, websites, etc. and you need to have different meta per variant.
+
+To get started you need to implement the `Variant` interface, and then if you are using a model use the `MetaVariant` trait.
+ 
+ ```php
+ use Coreplex\Meta\Contracts\Variant;
+ use Coreplex\Meta\Eloquent\MetaVariant;
+ 
+ class Country implements Variant
+ {
+      use MetaVariant;
+ }
+```
+
+Then you can provide the meta variant when setting or adding the meta, and it will load the meta data for the variant.
+
+```php
+$variant = Country::find(1);
+
+$container->add($page->meta, $variant);
 ```
 
 Non-Laravel Usage
