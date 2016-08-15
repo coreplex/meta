@@ -1,10 +1,12 @@
-<?php namespace Coreplex\Meta\Managers;
+<?php
+
+namespace Coreplex\Meta\Managers;
 
 use Illuminate\Support\Manager;
 use Coreplex\Meta\Eloquent\Repository as EloquentRepository;
 
-class Store extends Manager {
-
+class Store extends Manager
+{
     public function createEloquentDriver()
     {
         return new EloquentRepository;
@@ -23,12 +25,11 @@ class Store extends Manager {
     /**
      * Set the default authentication driver name.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return void
      */
     public function setDefaultDriver($name)
     {
         $this->app['config']['drivers.store'] = $name;
     }
-
 }

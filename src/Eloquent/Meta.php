@@ -1,21 +1,23 @@
-<?php namespace Coreplex\Meta\Eloquent;
+<?php
+
+namespace Coreplex\Meta\Eloquent;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Coreplex\Meta\Contracts\Group;
 
-class Meta extends Eloquent implements Group {
-
+class Meta extends Eloquent implements Group
+{
     /**
      * The refined meta, so that it doesn't refine it twice
-     * 
+     *
      * @var null|array
      */
     protected $refinedMeta;
 
     /**
      * The meta items for this object
-     * 
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function items()
     {
@@ -24,17 +26,17 @@ class Meta extends Eloquent implements Group {
 
     /**
      * Morph to the relation
-     * 
-     * @return Illuminate\Database\Eloquent\Relations\MorphTo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function metable()   
+    public function metable()
     {
         return $this->morphTo();
     }
 
     /**
      * Returns the meta items from the container
-     * 
+     *
      * @return array
      */
     public function meta()
@@ -46,7 +48,7 @@ class Meta extends Eloquent implements Group {
             // Check if the item data is in JSON format. If so, we store it as
             // an array
             if ($jsonItem = $this->determineJson($item['data'])) {
-                $item['data'] = (array) $jsonItem;
+                $item['data'] = (array)$jsonItem;
             }
 
             // Assign the data to the key in the refined array
@@ -59,7 +61,7 @@ class Meta extends Eloquent implements Group {
     /**
      * Determines whether a given string is JSON or not, returns false if found
      * to be something else, returns the decoded object if not
-     * 
+     *
      * @return void|array
      */
     private function determineJson($string)
@@ -75,14 +77,13 @@ class Meta extends Eloquent implements Group {
 
     /**
      * Return the default meta group, if one exists
-     * 
-     * @return Coreplex\Meta\Contracts\Group|null
+     *
+     * @return \Coreplex\Meta\Contracts\Group|null
      */
-    public static function defaultGroup()   
+    public static function defaultGroup()
     {
         $defaultGroup = static::where('default', true)->first();
 
         return $defaultGroup;
     }
-
 }

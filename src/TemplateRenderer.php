@@ -1,17 +1,19 @@
-<?php namespace Coreplex\Meta;
+<?php
 
-class TemplateRenderer implements Contracts\TemplateRenderer {
+namespace Coreplex\Meta;
 
+class TemplateRenderer implements Contracts\TemplateRenderer
+{
     /**
      * The array of meta templates
-     * 
+     *
      * @var array
      */
     protected $templates;
 
     /**
      * Create a new TemplateRenderer instance.
-     * 
+     *
      * @param array $templates
      */
     public function __construct(array &$templates)
@@ -21,15 +23,15 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
 
     /**
      * Render a meta item using the provided template.
-     * 
-     * @param  mixed $key
+     *
+     * @param  mixed        $key
      * @param  string|array $data
-     * @param  array $template
+     * @param  array        $template
      * @return string
      */
     public function render($key, $data, $template)
     {
-        if (! empty($template['extends']) && $template['extends']) {
+        if ( ! empty($template['extends']) && $template['extends']) {
             $template = $this->extend($template, $template['extends']);
         }
 
@@ -40,7 +42,8 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
             if ( ! is_array($data)) {
                 // And it is a single item
                 $element .= ">";
-                $element .= isset($template['content']) ? $this->replaceKeysInText(['content' => $data], $template['content']) : $data;
+                $element .= isset($template['content']) ? $this->replaceKeysInText(['content' => $data],
+                    $template['content']) : $data;
             } else {
                 // Or it is an array of 'key' => 'value'
                 if (isset($template['attributes'])) {
@@ -52,7 +55,8 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
                 }
                 $element .= ">";
 
-                $element .= isset($template['content']) ? $this->replaceKeysInText($data, $template['content']) : $data['content'];
+                $element .= isset($template['content']) ? $this->replaceKeysInText($data,
+                    $template['content']) : $data['content'];
             }
 
             $element .= "</{$template['element']}>";
@@ -89,8 +93,8 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
     /**
      * Extend the initial template with the template found using the extends
      * key.
-     * 
-     * @param  array $template
+     *
+     * @param  array  $template
      * @param  string $extends
      * @return array
      */
@@ -101,8 +105,8 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
 
     /**
      * Replace the items in the array by their key prefixed with a colon (:).
-     * 
-     * @param  array $replace
+     *
+     * @param  array  $replace
      * @param  string $searchText
      * @return string
      */
@@ -114,5 +118,4 @@ class TemplateRenderer implements Contracts\TemplateRenderer {
 
         return $searchText;
     }
-
 }

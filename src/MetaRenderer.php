@@ -1,20 +1,22 @@
-<?php namespace Coreplex\Meta;
+<?php
+
+namespace Coreplex\Meta;
 
 use Coreplex\Meta\Contracts\Container;
 use Coreplex\Meta\Contracts\TemplateRenderer;
 
-class MetaRenderer implements Contracts\Renderer {
-
+class MetaRenderer implements Contracts\Renderer
+{
     /**
      * The element templates.
-     * 
+     *
      * @var array
      */
     protected $templates;
 
     /**
      * The fallback element template.
-     * 
+     *
      * @var array
      */
     protected $default;
@@ -22,10 +24,10 @@ class MetaRenderer implements Contracts\Renderer {
     /**
      * Make a new renderer instance
      *
-     * @param array $templates An array of element templates
-     * @param array $defaultTemplate The default element template to be used if
-     *                               a custom one is not present
-     * @return void
+     * @param array            $templates       An array of element templates
+     * @param array            $defaultTemplate The default element template to be used if
+     *                                          a custom one is not present
+     * @param TemplateRenderer $templateRenderer
      */
     public function __construct(array $templates, array $defaultTemplate, TemplateRenderer $templateRenderer)
     {
@@ -38,8 +40,8 @@ class MetaRenderer implements Contracts\Renderer {
      * Returns the rendered string based on the provided meta container or
      * singular item array
      *
-     * @param Coreplex\Meta\Contracts\Container|array $renderable
-     * @param mixed $key
+     * @param \Coreplex\Meta\Contracts\Container|array $renderable
+     * @param mixed                                    $key
      * @return string
      */
     public function render($renderable, $key = false)
@@ -64,7 +66,7 @@ class MetaRenderer implements Contracts\Renderer {
 
     /**
      * Renders an individual meta element with the correct template
-     * 
+     *
      * @param  mixed $key
      * @param  array $data
      * @return string
@@ -78,7 +80,7 @@ class MetaRenderer implements Contracts\Renderer {
 
     /**
      * Find the correct template for the provided key.
-     * 
+     *
      * @param  mixed $key
      * @return array
      */
@@ -86,5 +88,4 @@ class MetaRenderer implements Contracts\Renderer {
     {
         return ! empty($this->templates[$key]) ? ! empty($this->templates[$key]['use']) ? new $this->templates[$key]['use'] : $this->templates[$key] : $this->default;
     }
-
 }

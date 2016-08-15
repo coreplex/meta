@@ -1,37 +1,39 @@
-<?php namespace Coreplex\Meta;
+<?php
+
+namespace Coreplex\Meta;
 
 use Coreplex\Meta\Contracts\Group;
 use Coreplex\Meta\Contracts\Repository;
 use Coreplex\Meta\Contracts\Renderer;
 
-class MetaContainer implements Contracts\Container {
-
+class MetaContainer implements Contracts\Container
+{
     /**
      * The meta items.
-     * 
+     *
      * @var array
      */
     protected $items = [];
 
     /**
      * The meta items.
-     * 
-     * @var Coreplex\Meta\Contracts\Renderer;
+     *
+     * @var \Coreplex\Meta\Contracts\Renderer;
      */
     protected $renderer;
 
     /**
      * The meta items.
-     * 
-     * @var Coreplex\Meta\Contracts\StoreManager;
+     *
+     * @var \Coreplex\Meta\Contracts\StoreManager;
      */
     protected $storeManager;
 
     /**
      * Make a new Container instance
-     * 
-     * @param Renderer $renderer
-     * @return void
+     *
+     * @param Renderer   $renderer
+     * @param Repository $store
      */
     public function __construct(Renderer $renderer, Repository $store)
     {
@@ -46,9 +48,9 @@ class MetaContainer implements Contracts\Container {
 
     /**
      * Add a meta item to the container.
-     * 
-     * @param string|Coreplex\Meta\Contracts\Group $key
-     * @param string|array $data
+     *
+     * @param string|\Coreplex\Meta\Contracts\Group $key
+     * @param string|array|bool                     $data
      * @return void
      */
     public function add($key, $data = false)
@@ -70,7 +72,7 @@ class MetaContainer implements Contracts\Container {
 
     /**
      * Retrieve the items from the container.
-     * 
+     *
      * @return array
      */
     public function items()
@@ -80,8 +82,8 @@ class MetaContainer implements Contracts\Container {
 
     /**
      * Overwrite the container with items from a given meta group.
-     * 
-     * @param Coreplex\Contracts\Group $meta
+     *
+     * @param \Coreplex\Meta\Contracts\Group $meta
      * @return void
      */
     public function set($meta)
@@ -95,7 +97,7 @@ class MetaContainer implements Contracts\Container {
 
     /**
      * Empty the items from the container.
-     * 
+     *
      * @return void
      */
     public function flush()
@@ -105,7 +107,7 @@ class MetaContainer implements Contracts\Container {
 
     /**
      * Render the items in the container.
-     * 
+     *
      * @return string
      */
     public function render()
@@ -115,12 +117,11 @@ class MetaContainer implements Contracts\Container {
 
     /**
      * Render the items in the container.
-     * 
+     *
      * @return string
      */
     public function __toString()
     {
         return $this->render();
     }
-
 }
