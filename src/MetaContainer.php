@@ -5,6 +5,7 @@ namespace Coreplex\Meta;
 use Coreplex\Meta\Contracts\Group;
 use Coreplex\Meta\Contracts\Repository;
 use Coreplex\Meta\Contracts\Renderer;
+use Coreplex\Meta\Contracts\Variant;
 
 class MetaContainer implements Contracts\Container
 {
@@ -58,7 +59,7 @@ class MetaContainer implements Contracts\Container
         // If a group is passed, recursively add each item from the group and
         // exit the method
         if ($key instanceof Group) {
-            foreach ($key->meta() as $key => $data) {
+            foreach ($key->meta($data) as $key => $data) {
                 $this->add($key, $data);
             }
             return;
@@ -84,14 +85,14 @@ class MetaContainer implements Contracts\Container
      * Overwrite the container with items from a given meta group.
      *
      * @param \Coreplex\Meta\Contracts\Group $meta
-     * @return void
+     * @param null|Variant                   $variant
      */
-    public function set($meta)
+    public function set($meta, Variant $variant = null)
     {
         if ($meta instanceof Group) {
-            $this->items = $meta->meta();
+            $this->items = $meta->meta($variant);
         } else {
-            $this->items = $this->store->find($meta)->meta;
+            $this->items = $this->store->find($meta, $variant)->meta;
         }
     }
 
