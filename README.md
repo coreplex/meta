@@ -216,10 +216,14 @@ class Page extends Model
 }
 ```
 
-You can then create, update and retrieve them meta group by accessing the
-`meta` relationship on MyModel. It will return a Coreplex\Meta\Eloquent\Meta
-instance which has all the items bound to it, as we have seen in the above
-examples. This can then be set by doing something along the lines of this in
+This will add two methods to your model; `hasMeta` and `getMeta`. Using these
+methods you can check if the model has meta data and then retrieve it. You can
+also access the meta by using the `meta` relationship, you can use this to 
+create and update your meta data.
+
+When you retrieve meta it will return a Coreplex\Meta\Eloquent\Meta instance
+which has all the items bound to it, as we have seen in the above examples. 
+This can then be set by doing something along the lines of this in
 our controllers:
 
 ```php
@@ -231,8 +235,8 @@ public function home(MetaContainer $container)
         abort(404);
     }
 
-    if ($page->meta) {
-        $container->add($page->meta);
+    if ($page->hasMeta()) {
+        $container->add($page->getMeta());
     }
 }
 ```
@@ -253,8 +257,8 @@ public function home(MetaContainer $container, $productId)
         abort(404);
     }
 
-    if ($product->meta) {
-        $container->add($page->meta);
+    if ($product->hasMeta()) {
+        $container->add($page->getMeta());
     } else {
         // Empties any defaults out of the container
         $container->flush();
@@ -288,7 +292,15 @@ Then you can provide the meta variant when setting or adding the meta, and it wi
 ```php
 $variant = Country::find(1);
 
-$container->add($page->meta, $variant);
+$container->add($page->getMeta($variant));
+```
+
+If you are using a key rather than a model to set your meta, you can pass the variant as the second parameter.
+
+```php
+$variant = Country::find(1);
+
+$container->set('global', $variant);
 ```
 
 Non-Laravel Usage
