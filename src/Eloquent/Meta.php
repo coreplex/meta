@@ -8,6 +8,20 @@ use Coreplex\Meta\Contracts\Group;
 class Meta extends Eloquent implements Group
 {
     /**
+     * The fillable fields
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'metable_id',
+        'metable_type',
+        'identifier',
+        'default',
+        'variant_id',
+        'variant_type'
+    ];
+    
+    /**
      * The refined meta, so that it doesn't refine it twice
      *
      * @var null|array
