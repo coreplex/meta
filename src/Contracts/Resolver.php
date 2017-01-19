@@ -5,14 +5,14 @@ namespace Coreplex\Meta\Contracts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-interface Determiner
+interface Resolver
 {
     /**
-     * Determine which meta variant should be used and then scope
+     * Resolve which meta variant should be used and then scope
      * the meta relationship to it.
      *
      * @param Model $model
      * @return MorphOne
      */
-    public function determine(Model $model);
+    public function resolve(Model $model);
 }

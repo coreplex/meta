@@ -2,17 +2,17 @@
 
 namespace Coreplex\Meta\Eloquent;
 
-use Coreplex\Meta\Contracts\Determiner;
+use Coreplex\Meta\Contracts\Resolver;
 use Coreplex\Meta\Contracts\Variant;
 
 trait HasMetaData
 {
     /**
-     * The current determiner.
+     * The current resolver.
      *
-     * @var Determiner
+     * @var Resolver
      */
-    protected $determiner;
+    protected $resolver;
 
     /**
      * Retrieve the meta data for this model
@@ -22,7 +22,7 @@ trait HasMetaData
      */
     public function meta(Variant $variant = null)
     {
-        if ( ! $this->hasDeterminer()) {
+        if ( ! $this->hasResolver()) {
             if ( ! $variant) {
                 return $this->morphOne('Coreplex\Meta\Eloquent\Meta', 'metable');
             }
@@ -32,7 +32,7 @@ trait HasMetaData
                         ->where('variant_type', $variant->getType());
         }
 
-        return $this->getDeterminer()->determine($this);
+        return $this->getResolver()->resolve($this);
     }
 
     /**
@@ -63,46 +63,46 @@ trait HasMetaData
     }
 
     /**
-     * Check if a determiner has been set.
+     * Check if a resolver has been set.
      *
      * @return bool
      */
-    public function hasDeterminer()
+    public function hasResolver()
     {
-        return ! is_null($this->determiner);
+        return ! is_null($this->resolver);
     }
 
     /**
-     * Get the current determiner.
+     * Get the current resolver.
      *
-     * @return Determiner|null
+     * @return Resolver|null
      */
-    public function getDeterminer()
+    public function getResolver()
     {
-        return $this->determiner;
+        return $this->resolver;
     }
 
     /**
-     * Set the current determiner.
+     * Set the current resolver.
      *
-     * @param Determiner $determiner
+     * @param Resolver $resolver
      * @return $this
      */
-    public function setDeterminer(Determiner $determiner)
+    public function setResolver(Resolver $resolver)
     {
-        $this->determiner = $determiner;
+        $this->resolver = $resolver;
 
         return $this;
     }
 
     /**
-     * Alias for the set determiner method.
+     * Alias for the set resolver method.
      *
-     * @param Determiner $determiner
+     * @param Resolver $resolver
      * @return $this
      */
-    public function determiner(Determiner $determiner)
+    public function resolver(Resolver $resolver)
     {
-        return $this->setDeterminer($determiner);
+        return $this->setResolver($resolver);
     }
 }
