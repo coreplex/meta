@@ -2,10 +2,18 @@
 
 namespace Coreplex\Meta\Eloquent;
 
+use Coreplex\Meta\Contracts\Resolver;
 use Coreplex\Meta\Contracts\Variant;
 
 trait HasMetaData
 {
+    /**
+     * The current resolver.
+     *
+     * @var Resolver
+     */
+    protected $resolver;
+
     /**
      * Retrieve the meta data for this model
      *
@@ -14,13 +22,17 @@ trait HasMetaData
      */
     public function meta(Variant $variant = null)
     {
-        if ( ! $variant) {
-            return $this->morphOne('Coreplex\Meta\Eloquent\Meta', 'metable');
+        if ( ! $this->hasResolver()) {
+            if ( ! $variant) {
+                return $this->morphOne('Coreplex\Meta\Eloquent\Meta', 'metable');
+            }
+
+            return $this->morphOne('Coreplex\Meta\Eloquent\Meta', 'metable')
+                        ->where('variant_id', $variant->getKey())
+                        ->where('variant_type', $variant->getType());
         }
 
-        return $this->morphOne('Coreplex\Meta\Eloquent\Meta', 'metable')
-                    ->where('variant_id', $variant->getKey())
-                    ->where('variant_type', $variant->getType());
+        return $this->getResolver()->resolve($this);
     }
 
     /**
@@ -48,5 +60,49 @@ trait HasMetaData
         }
 
         return $this->meta;
+    }
+
+    /**
+     * Check if a resolver has been set.
+     *
+     * @return bool
+     */
+    public function hasResolver()
+    {
+        return ! is_null($this->resolver);
+    }
+
+    /**
+     * Get the current resolver.
+     *
+     * @return Resolver|null
+     */
+    public function getResolver()
+    {
+        return $this->resolver;
+    }
+
+    /**
+     * Set the current resolver.
+     *
+     * @param Resolver $resolver
+     * @return $this
+     */
+    public function setResolver(Resolver $resolver)
+    {
+        $this->resolver = $resolver;
+
+        return $this;
+    }
+
+    /**
+     * Alias for the set resolver method.
+     *
+     * @param Resolver $resolver
+     * @return $this
+     */
+    public function resolver(Resolver $resolver)
+    {
+        return $this->setResolver($resolver);
     }
 }
