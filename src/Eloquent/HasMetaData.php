@@ -36,7 +36,7 @@ trait HasMetaData
             return $this->meta($variant)->exists();
         }
         
-        $this->meta()->whereNull('variant_type')->whereNull('variant_id')->exists();
+        return $this->meta()->whereNull('variant_type')->whereNull('variant_id')->exists();
     }
 
     /**
