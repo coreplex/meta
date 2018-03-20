@@ -32,7 +32,11 @@ trait HasMetaData
      */
     public function hasMeta(Variant $variant = null)
     {
-        return $this->meta($variant)->exists();
+        if (! empty($variant)) {
+            return $this->meta($variant)->exists();
+        }
+        
+        $this->meta()->whereNull('variant_type')->whereNull('variant_id')->exists();
     }
 
     /**
