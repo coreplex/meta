@@ -47,6 +47,6 @@ trait HasMetaData
             return $this->meta($variant)->getResults();
         }
 
-        return $this->meta;
+        return $this->meta()->whereNull('variant_type')->whereNull('variant_id')->getResults();
     }
 }
