@@ -57,6 +57,7 @@ class Meta extends Eloquent implements Group
     {
         $items = $this->items->toArray();
         $refined = [];
+        $refined['core:key'] = $this->id;
 
         foreach ($items as $item) {
             // Check if the item data is in JSON format. If so, we store it as
