@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Meta Database Connection
+    |--------------------------------------------------------------------------
+    |
+    | Set the database connection to use with Coreplex Meta. Full connections
+    | details must be defined in the config/database.php file. If left blank
+    | no connection will be specified in the meta models.
+    |
+    */
+
+    'connection' => env('COREPLEX_META_DATABASE', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Meta Elements
     |--------------------------------------------------------------------------
     |
