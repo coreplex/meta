@@ -3,9 +3,27 @@
 namespace Coreplex\Meta\Eloquent\Meta;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Facades\Config;
 
 class Item extends Eloquent
 {
+
+    /**
+     * Create a new Eloquent model instance.
+     *
+     * @param  array  $attributes
+     * @return void
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        // If the connection config has been set then use that for the model connection
+        if ($coreplexConnection = Config::get('meta.connection', false)) {
+            $this->connection = $coreplexConnection;
+        }
+    }
+
     /**
      * Define the database table used for the model
      *
