@@ -19,7 +19,7 @@ class Store extends Manager
      */
     public function getDefaultDriver()
     {
-        return $this->app['config']['drivers.store'];
+        return $this->container['config']['drivers.store'];
     }
 
     /**
@@ -30,6 +30,6 @@ class Store extends Manager
      */
     public function setDefaultDriver($name)
     {
-        $this->app['config']['drivers.store'] = $name;
+        $this->container['config']['drivers.store'] = $name;
     }
 }
