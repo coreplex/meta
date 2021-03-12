@@ -19,7 +19,9 @@ class Store extends Manager
      */
     public function getDefaultDriver()
     {
-        return $this->container['config']['drivers.store'];
+        $container = ! empty($this->container) ? $this->container : $this->app;
+
+        return $container['config']['drivers.store'];
     }
 
     /**
@@ -30,6 +32,8 @@ class Store extends Manager
      */
     public function setDefaultDriver($name)
     {
-        $this->container['config']['drivers.store'] = $name;
+        $container = ! empty($this->container) ? $this->container : $this->app;
+
+        $container['config']['drivers.store'] = $name;
     }
 }
